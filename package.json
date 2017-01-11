@@ -1,0 +1,67 @@
+{
+    "author": "GavinJones",
+    "dependencies": {},
+    "keywords": [],
+    "name": "healthinfo",
+    "pebble": {
+        "capabilities": [
+            "health"
+        ],
+        "displayName": "Health Info",
+        "enableMultiJS": false,
+        "messageKeys": [],
+        "projectType": "native",
+        "resources": {
+            "media": [
+                {
+                    "file": "images/icon.png",
+                    "menuIcon": true,
+                    "name": "ICON",
+                    "targetPlatforms": null,
+                    "type": "png"
+                },
+                {
+                    "file": "fonts/dots.ttf",
+                    "name": "DOTS_18",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/dots.ttf",
+                    "name": "DOTS_40",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "characterRegex": "[0-9:.]",
+                    "file": "fonts/dots.ttf",
+                    "name": "DOTS_62",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/square.ttf",
+                    "name": "SQUARE_26",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/square.ttf",
+                    "name": "SQUARE_25",
+                    "targetPlatforms": null,
+                    "type": "font"
+                }
+            ]
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "chalk",
+            "diorite"
+        ],
+        "uuid": "32f77c10-cb29-4530-bcd4-747b813176cc",
+        "watchapp": {
+            "watchface": false
+        }
+    },
+    "version": "1.0.0"
+}
