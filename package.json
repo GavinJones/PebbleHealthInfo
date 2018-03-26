@@ -14,9 +14,44 @@
         "resources": {
             "media": [
                 {
-                    "characterRegex": "[0-9]",
-                    "file": "fonts/visitor.ttf",
-                    "name": "VISITOR_48",
+                    "file": "fonts/Pixel Thin.ttf",
+                    "name": "THIN_31",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Pixel Thin.ttf",
+                    "name": "THIN_23",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Pixel Full.ttf",
+                    "name": "FULL_44",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Pixel Full.ttf",
+                    "name": "FULL_40",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Pixel Full.ttf",
+                    "name": "FULL_18",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Pixel Dot.ttf",
+                    "name": "PIXEL_31",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Pixel Dot.ttf",
+                    "name": "PIXEL_23",
                     "targetPlatforms": null,
                     "type": "font"
                 },
@@ -26,42 +61,6 @@
                     "name": "ICON",
                     "targetPlatforms": null,
                     "type": "png"
-                },
-                {
-                    "file": "fonts/dots.ttf",
-                    "name": "DOTS_40",
-                    "targetPlatforms": null,
-                    "type": "font"
-                },
-                {
-                    "file": "fonts/dots.ttf",
-                    "name": "DOTS_50",
-                    "targetPlatforms": null,
-                    "type": "font"
-                },
-                {
-                    "file": "fonts/dots.ttf",
-                    "name": "DOTS_30",
-                    "targetPlatforms": null,
-                    "type": "font"
-                },
-                {
-                    "file": "fonts/square.ttf",
-                    "name": "SQUARE_28",
-                    "targetPlatforms": null,
-                    "type": "font"
-                },
-                {
-                    "file": "fonts/square.ttf",
-                    "name": "SQUARE_25",
-                    "targetPlatforms": null,
-                    "type": "font"
-                },
-                {
-                    "file": "fonts/square.ttf",
-                    "name": "SQUARE_22",
-                    "targetPlatforms": null,
-                    "type": "font"
                 }
             ]
         },

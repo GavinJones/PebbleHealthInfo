@@ -5,7 +5,7 @@ Window *window;
 static TextLayer *sleep_layer, *active_layer, *calorie_layer, *distance_layer, *step_layer, *stepcolour_layer;
 //                 *Xsleep_layer, *Xactive_layer, *Xcalorie_layer, *Xdistance_layer;
 
-static GFont textFont, numFont;
+static GFont textFont, numFont, bigFont;
 
 void click_handler(ClickRecognizerRef recognizer, void *context) {
   // APP_LOG(APP_LOG_LEVEL_DEBUG, "Single Click");
@@ -94,23 +94,26 @@ void window_load(Window *window) {
   
   // Load custom fonts
     
-  textFont = PBL_IF_ROUND_ELSE(fonts_load_custom_font(resource_get_handle(RESOURCE_ID_VISITOR_48)), fonts_load_custom_font(resource_get_handle(RESOURCE_ID_VISITOR_48)));
+  textFont = PBL_IF_ROUND_ELSE(fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FULL_44)), fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FULL_40)));
 
-  numFont = PBL_IF_ROUND_ELSE(fonts_load_custom_font(resource_get_handle(RESOURCE_ID_DOTS_30)), fonts_load_custom_font(resource_get_handle(RESOURCE_ID_DOTS_40)));
+  numFont = PBL_IF_ROUND_ELSE(fonts_load_custom_font(resource_get_handle(RESOURCE_ID_PIXEL_23)), fonts_load_custom_font(resource_get_handle(RESOURCE_ID_PIXEL_31)));
+
+  bigFont = PBL_IF_ROUND_ELSE(fonts_load_custom_font(resource_get_handle(RESOURCE_ID_PIXEL_31)), fonts_load_custom_font(resource_get_handle(RESOURCE_ID_PIXEL_31)));
+
 
   // textFont = fonts_get_system_font(FONT_KEY_LECO_28_LIGHT_NUMBERS);
   // numFont = fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD);
   
   // Create Active Minutes TextLayer
-  active_layer = PBL_IF_ROUND_ELSE(text_layer_create(GRect(1, 2, 180, 38)), text_layer_create(GRect(1, -17, 144, 40)));
+  active_layer = PBL_IF_ROUND_ELSE(text_layer_create(GRect(1, 58, 180, 40)), text_layer_create(GRect(1, -7, 144, 40)));
   text_layer_set_background_color(active_layer, GColorClear);
   text_layer_set_text_color(active_layer, GColorWhite);
-  text_layer_set_font(active_layer, numFont);
+  text_layer_set_font(active_layer, bigFont);
   PBL_IF_ROUND_ELSE(text_layer_set_text_alignment(active_layer, GTextAlignmentCenter),text_layer_set_text_alignment(active_layer, GTextAlignmentRight));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(active_layer));
 
  // Create Distance TextLayer
-  distance_layer = PBL_IF_ROUND_ELSE(text_layer_create(GRect(1, 35, 180, 40)), text_layer_create(GRect(1, 17, 144, 40)));
+  distance_layer = PBL_IF_ROUND_ELSE(text_layer_create(GRect(1, 13, 180, 40)), text_layer_create(GRect(1, 27, 144, 40)));
   text_layer_set_background_color(distance_layer, GColorClear);
   text_layer_set_text_color(distance_layer, GColorWhite);
   text_layer_set_font(distance_layer, numFont);
@@ -118,20 +121,20 @@ void window_load(Window *window) {
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(distance_layer));
     
  // Create Calorie TextLayer
-  calorie_layer = PBL_IF_ROUND_ELSE(text_layer_create(GRect(1, 65, 180, 38)), text_layer_create(GRect(1, 51, 144, 40)));
+  calorie_layer = PBL_IF_ROUND_ELSE(text_layer_create(GRect(1, 32, 180, 40)), text_layer_create(GRect(1, 61, 144, 40)));
   text_layer_set_background_color(calorie_layer, GColorClear);
   text_layer_set_text_color(calorie_layer, GColorWhite);
-  text_layer_set_font(calorie_layer, numFont);
+  text_layer_set_font(calorie_layer, bigFont);
   PBL_IF_ROUND_ELSE(text_layer_set_text_alignment(calorie_layer, GTextAlignmentCenter),text_layer_set_text_alignment(calorie_layer, GTextAlignmentRight));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(calorie_layer));
 
   // Create Step Colour TextLayer
-  stepcolour_layer = PBL_IF_ROUND_ELSE(text_layer_create(GRect(1, 104, 180, 35)), text_layer_create(GRect(0, 0, 0, 0)));
+  stepcolour_layer = PBL_IF_ROUND_ELSE(text_layer_create(GRect(1, 95, 180, 40)), text_layer_create(GRect(0, 0, 0, 0)));
   text_layer_set_background_color(stepcolour_layer, GColorBlue);
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(stepcolour_layer));
   
   // Create Step TextLayer
-  step_layer = PBL_IF_ROUND_ELSE(text_layer_create(GRect(1, 85, 180, 53)), text_layer_create(GRect(1, 83, 147, 53)));
+  step_layer = PBL_IF_ROUND_ELSE(text_layer_create(GRect(1, 85, 180, 53)), text_layer_create(GRect(1, 90, 144, 54)));
   text_layer_set_background_color(step_layer, GColorClear);
   text_layer_set_text_color(step_layer, GColorWhite);
   text_layer_set_font(step_layer, textFont);
@@ -139,7 +142,7 @@ void window_load(Window *window) {
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(step_layer));
   
   // Create Sleep TextLayer
-  sleep_layer = PBL_IF_ROUND_ELSE(text_layer_create(GRect(1, 130, 180, 38)),text_layer_create(GRect(1, 124, 144, 40)));  
+  sleep_layer = PBL_IF_ROUND_ELSE(text_layer_create(GRect(1, 132, 180, 38)),text_layer_create(GRect(1, 130, 144, 40)));  
   text_layer_set_background_color(sleep_layer, GColorClear);
   text_layer_set_text_color(sleep_layer, GColorWhite);
   text_layer_set_font(sleep_layer, numFont);
@@ -166,6 +169,7 @@ void window_unload(Window *window) {
    
   fonts_unload_custom_font(textFont);
   fonts_unload_custom_font(numFont);
+  fonts_unload_custom_font(bigFont);
   
 }
 
