@@ -1,11 +1,46 @@
 #include "pebble.h"
 
+#define SETTINGS_KEY 1
+
 Window *window;
 
 static TextLayer *sleep_layer, *active_layer, *calorie_layer, *distance_layer, *step_layer, *stepcolour_layer;
 //                 *Xsleep_layer, *Xactive_layer, *Xcalorie_layer, *Xdistance_layer;
 
 static GFont textFont, numFont, bigFont;
+
+// A structure containing our settings
+typedef struct ClaySettings {
+  int StepGoal;
+  int stepcolour;
+  
+} __attribute__((__packed__)) ClaySettings;
+
+// A struct for our specific settings (see main.h)
+ClaySettings settings;
+
+// Initialize the default settings
+static void prv_default_settings() {
+  settings.StepGoal = 4000;
+  settings.stepcolour = 0x0000FF;
+}
+
+// Read settings from persistent storage
+static void prv_load_settings() {
+  // Load the default settings
+  prv_default_settings();
+  // Read settings from persistent storage, if they exist
+  persist_read_data(SETTINGS_KEY, &settings, sizeof(settings));
+}
+
+// Save the settings to persistent storage
+static void prv_save_settings() {
+  persist_write_data(SETTINGS_KEY, &settings, sizeof(settings));
+  // Update the display based on new settings
+  // update_time();
+}
+
+
 
 void click_handler(ClickRecognizerRef recognizer, void *context) {
   // APP_LOG(APP_LOG_LEVEL_DEBUG, "Single Click");
@@ -43,6 +78,11 @@ static void health_handler(HealthEventType event, void *context) {
   // display the step count
   snprintf(s_value_buffer, sizeof(s_value_buffer), "%d", (int)health_service_sum_today(HealthMetricStepCount));
   text_layer_set_text(step_layer, s_value_buffer);
+  
+  int step_count = atoi(s_value_buffer);
+  if(step_count > settings.StepGoal) {
+    PBL_IF_COLOR_ELSE(text_layer_set_text_color(step_layer, GColorGreen),text_layer_set_text_color(step_layer, GColorWhite));
+    } 
   
   static char a_value_buffer[38];
   
@@ -84,6 +124,25 @@ static void health_handler(HealthEventType event, void *context) {
   text_layer_set_text(sleep_layer, z_value_buffer);
   
 }  
+
+static void inbox_received_handler(DictionaryIterator *iter, void *context) {
+  Tuple *tpstepgoal = dict_find(iter, MESSAGE_KEY_stepgoal);
+  if(tpstepgoal) {
+    settings.StepGoal = tpstepgoal->value->int32;
+
+  // Save the new settings to persistent storage
+  prv_save_settings();
+  }
+    
+  Tuple *stepcolour = dict_find(iter, MESSAGE_KEY_stepcolour);
+  if(stepcolour) {
+    settings.stepcolour = stepcolour->value->int32;
+
+  // Save the new settings to persistent storage
+  prv_save_settings();
+  }
+  
+}
 
 void window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
@@ -130,13 +189,13 @@ void window_load(Window *window) {
 
   // Create Step Colour TextLayer
   stepcolour_layer = PBL_IF_ROUND_ELSE(text_layer_create(GRect(1, 95, 180, 40)), text_layer_create(GRect(0, 0, 0, 0)));
-  text_layer_set_background_color(stepcolour_layer, GColorBlue);
+  text_layer_set_background_color(stepcolour_layer, GColorBlack);
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(stepcolour_layer));
   
   // Create Step TextLayer
   step_layer = PBL_IF_ROUND_ELSE(text_layer_create(GRect(1, 85, 180, 53)), text_layer_create(GRect(1, 90, 144, 54)));
   text_layer_set_background_color(step_layer, GColorClear);
-  text_layer_set_text_color(step_layer, GColorWhite);
+  PBL_IF_COLOR_ELSE(text_layer_set_text_color(step_layer, GColorFromHEX(settings.stepcolour)),text_layer_set_text_color(step_layer, GColorWhite));
   text_layer_set_font(step_layer, textFont);
   PBL_IF_ROUND_ELSE(text_layer_set_text_alignment(step_layer, GTextAlignmentCenter),text_layer_set_text_alignment(step_layer, GTextAlignmentRight));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(step_layer));
@@ -174,6 +233,11 @@ void window_unload(Window *window) {
 }
 
 void init(void) {
+  prv_load_settings();
+  app_message_register_inbox_received((AppMessageInboxReceived) inbox_received_handler);
+  app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
+
+
   window = window_create();
   window_set_window_handlers(window, (WindowHandlers) {
     .load = window_load,
